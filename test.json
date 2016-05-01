@@ -1,0 +1,490 @@
+{
+    "nodes": [
+        {
+            "group": 1,
+            "text": "walls"
+        },
+        {
+            "group": 1,
+            "text": "ivy"
+        },
+        {
+            "group": 1,
+            "text": "paths"
+        },
+        {
+            "group": 1,
+            "text": "beauty"
+        },
+        {
+            "group": 1,
+            "text": "crap"
+        },
+        {
+            "group": 1,
+            "text": "known"
+        },
+        {
+            "group": 1,
+            "text": "loved"
+        },
+        {
+            "group": 1,
+            "text": "well"
+        },
+        {
+            "group": 1,
+            "text": "spired"
+        },
+        {
+            "group": 1,
+            "text": "chapel"
+        },
+        {
+            "group": 1,
+            "text": "rising"
+        },
+        {
+            "group": 1,
+            "text": "proudly"
+        },
+        {
+            "group": 1,
+            "text": "morning"
+        },
+        {
+            "group": 1,
+            "text": "hymn"
+        },
+        {
+            "group": 1,
+            "text": "evening"
+        },
+        {
+            "group": 1,
+            "text": "bell"
+        },
+        {
+            "group": 1,
+            "text": "middlebury"
+        },
+        {
+            "group": 1,
+            "text": "alma"
+        },
+        {
+            "group": 1,
+            "text": "mater"
+        },
+        {
+            "group": 1,
+            "text": "symbol"
+        },
+        {
+            "group": 1,
+            "text": "strength"
+        },
+        {
+            "group": 1,
+            "text": "truth"
+        },
+        {
+            "group": 1,
+            "text": "sunset"
+        },
+        {
+            "group": 1,
+            "text": "glowing"
+        },
+        {
+            "group": 1,
+            "text": "o'er"
+        },
+        {
+            "group": 1,
+            "text": "mountains"
+        },
+        {
+            "group": 1,
+            "text": "snowy"
+        },
+        {
+            "group": 1,
+            "text": "peaks"
+        },
+        {
+            "group": 1,
+            "text": "winding"
+        },
+        {
+            "group": 1,
+            "text": "ways"
+        },
+        {
+            "group": 1,
+            "text": "peaceful"
+        },
+        {
+            "group": 1,
+            "text": "stillness"
+        },
+        {
+            "group": 1,
+            "text": "campus"
+        },
+        {
+            "group": 1,
+            "text": "mem'ries"
+        },
+        {
+            "group": 1,
+            "text": "happy"
+        },
+        {
+            "group": 1,
+            "text": "days"
+        },
+        {
+            "group": 1,
+            "text": "loyal"
+        },
+        {
+            "group": 1,
+            "text": "ever"
+        },
+        {
+            "group": 1,
+            "text": "friendships"
+        },
+        {
+            "group": 1,
+            "text": "spent"
+        },
+        {
+            "group": 1,
+            "text": "four"
+        },
+        {
+            "group": 1,
+            "text": "glorious"
+        },
+        {
+            "group": 1,
+            "text": "years"
+        },
+        {
+            "group": 1,
+            "text": "filling"
+        },
+        {
+            "group": 1,
+            "text": "us"
+        },
+        {
+            "group": 1,
+            "text": "hope"
+        },
+        {
+            "group": 1,
+            "text": "courage"
+        },
+        {
+            "group": 1,
+            "text": "till"
+        },
+        {
+            "group": 1,
+            "text": "hour"
+        },
+        {
+            "group": 1,
+            "text": "parting"
+        },
+        {
+            "group": 1,
+            "text": "nears"
+        }
+    ],
+    "links": [
+        {
+            "source": 0,
+            "target": 0,
+            "occurances": 2
+        },
+        {
+            "source": 0,
+            "target": 1,
+            "occurances": 1
+        },
+        {
+            "source": 0,
+            "target": 2,
+            "occurances": 2
+        },
+        {
+            "source": 1,
+            "target": 3,
+            "occurances": 1
+        },
+        {
+            "source": 2,
+            "target": 0,
+            "occurances": 1
+        },
+        {
+            "source": 3,
+            "target": 4,
+            "occurances": 1
+        },
+        {
+            "source": 4,
+            "target": 3,
+            "occurances": 1
+        },
+        {
+            "source": 2,
+            "target": 5,
+            "occurances": 1
+        },
+        {
+            "source": 3,
+            "target": 6,
+            "occurances": 1
+        },
+        {
+            "source": 5,
+            "target": 7,
+            "occurances": 1
+        },
+        {
+            "source": 6,
+            "target": 8,
+            "occurances": 1
+        },
+        {
+            "source": 7,
+            "target": 9,
+            "occurances": 1
+        },
+        {
+            "source": 8,
+            "target": 10,
+            "occurances": 1
+        },
+        {
+            "source": 9,
+            "target": 11,
+            "occurances": 1
+        },
+        {
+            "source": 10,
+            "target": 12,
+            "occurances": 1
+        },
+        {
+            "source": 11,
+            "target": 13,
+            "occurances": 1
+        },
+        {
+            "source": 12,
+            "target": 14,
+            "occurances": 1
+        },
+        {
+            "source": 13,
+            "target": 15,
+            "occurances": 1
+        },
+        {
+            "source": 14,
+            "target": 16,
+            "occurances": 1
+        },
+        {
+            "source": 15,
+            "target": 17,
+            "occurances": 1
+        },
+        {
+            "source": 16,
+            "target": 18,
+            "occurances": 1
+        },
+        {
+            "source": 17,
+            "target": 19,
+            "occurances": 1
+        },
+        {
+            "source": 18,
+            "target": 20,
+            "occurances": 1
+        },
+        {
+            "source": 19,
+            "target": 21,
+            "occurances": 2
+        },
+        {
+            "source": 20,
+            "target": 19,
+            "occurances": 1
+        },
+        {
+            "source": 21,
+            "target": 20,
+            "occurances": 1
+        },
+        {
+            "source": 20,
+            "target": 22,
+            "occurances": 1
+        },
+        {
+            "source": 21,
+            "target": 23,
+            "occurances": 1
+        },
+        {
+            "source": 22,
+            "target": 24,
+            "occurances": 1
+        },
+        {
+            "source": 23,
+            "target": 25,
+            "occurances": 1
+        },
+        {
+            "source": 24,
+            "target": 26,
+            "occurances": 1
+        },
+        {
+            "source": 25,
+            "target": 27,
+            "occurances": 1
+        },
+        {
+            "source": 26,
+            "target": 28,
+            "occurances": 1
+        },
+        {
+            "source": 27,
+            "target": 29,
+            "occurances": 1
+        },
+        {
+            "source": 28,
+            "target": 30,
+            "occurances": 1
+        },
+        {
+            "source": 29,
+            "target": 31,
+            "occurances": 1
+        },
+        {
+            "source": 30,
+            "target": 24,
+            "occurances": 1
+        },
+        {
+            "source": 31,
+            "target": 32,
+            "occurances": 1
+        },
+        {
+            "source": 24,
+            "target": 33,
+            "occurances": 1
+        },
+        {
+            "source": 32,
+            "target": 34,
+            "occurances": 1
+        },
+        {
+            "source": 33,
+            "target": 35,
+            "occurances": 1
+        },
+        {
+            "source": 34,
+            "target": 36,
+            "occurances": 1
+        },
+        {
+            "source": 35,
+            "target": 37,
+            "occurances": 1
+        },
+        {
+            "source": 36,
+            "target": 38,
+            "occurances": 1
+        },
+        {
+            "source": 37,
+            "target": 39,
+            "occurances": 1
+        },
+        {
+            "source": 38,
+            "target": 40,
+            "occurances": 1
+        },
+        {
+            "source": 39,
+            "target": 41,
+            "occurances": 1
+        },
+        {
+            "source": 40,
+            "target": 42,
+            "occurances": 1
+        },
+        {
+            "source": 41,
+            "target": 43,
+            "occurances": 1
+        },
+        {
+            "source": 42,
+            "target": 44,
+            "occurances": 1
+        },
+        {
+            "source": 43,
+            "target": 45,
+            "occurances": 1
+        },
+        {
+            "source": 44,
+            "target": 46,
+            "occurances": 1
+        },
+        {
+            "source": 45,
+            "target": 47,
+            "occurances": 1
+        },
+        {
+            "source": 46,
+            "target": 48,
+            "occurances": 1
+        },
+        {
+            "source": 47,
+            "target": 49,
+            "occurances": 1
+        },
+        {
+            "source": 48,
+            "target": 50,
+            "occurances": 1
+        }
+    ]
+}
