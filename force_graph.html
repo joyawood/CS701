@@ -56,8 +56,8 @@ d3.json("test.json", function(error, graph) {
       .data(graph.nodes)
     .enter().append("circle")
       .attr("class", "node")
-      .attr("r", function (d,i) {if (i < 12) {return 12;}else{return 5;}})
-      .style("fill", function(d) { return color(d.doctor); })
+      .attr("r", 5})
+      .style("fill", function(d) { return color(d.group); })
       .call(force.drag);
 
   node.append("title")
