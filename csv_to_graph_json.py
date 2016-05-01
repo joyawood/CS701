@@ -19,11 +19,13 @@ def main(filename):
     
     nodes = createNodes(wordList)[0]
 
+    print nodes
+
     links = createLinks(nodes, wordList)
     json_prep = {"nodes": nodes, "links":links}
 
     # Open a file for writing
-    out_file = open("test.json","w")
+    out_file = open("test1.json","w")
     
     # Save the dictionary into this file
     # (the 'indent=4' is optional, but makes it more readable)
@@ -83,9 +85,11 @@ def createNodes(words):
        
     for word in words:
         if word in unique: 
-            pass
+            for obj in nodesValue:
+                if obj["text"] == word:
+                    obj["frequency"] += 1
         else:
-            temp = {"text" : word, "group": 1}
+            temp = {"text" : word, "group": 1, "frequency": 1}
             nodesValue.append(temp)
             unique.append(word)
             
@@ -111,4 +115,7 @@ def clean(word):
     word = word.strip(string.punctuation + string.whitespace)
     word = word.lower()
     return word
+
+main("honor_code.txt")
+
             
