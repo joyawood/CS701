@@ -15,16 +15,31 @@
 
 </style>
 <body>
+
+
+<form>
+  <select name="cars">
+    <option value="20">Twenty</option>
+    <option value="50">Fifty</option>
+    <option value="100">Hundreed</option>
+  </select>
+  <br><br>
+  <input onclick= "helloWorld()" type="submit">
+</form>
+
+
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
 
-var width = 960,
-    height = 700;
+
+
+var width = 800,
+    height = 582;
 
 var color = d3.scale.category20();
 
 var force = d3.layout.force()
-    .charge(-150)
+    .charge(-50)
     .linkDistance(10)
     .size([width, height]);
 
@@ -32,16 +47,75 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("test1.json", function(error, graph) {
 
-  console.log(graph); 
+//Get the Json data from the backend 
 
-	var lengthScale = d3.scale.linear()
-	.range([100,20])
-	.domain(d3.extent(graph.links, function (d) { return +d.occurances}));
+function loadData(){
+  console.log("loadData called!")
+  var data = 1;
+  xml_http_post("force_graph.html", data, getJSON); 
+}
+
+
+
+function xml_http_post(url, data,  callback) {
+    var req = false;
+    try {
+        // Firefox, Opera 8.0+, Safari
+        req = new XMLHttpRequest();
+    }
+    catch (e) {
+        // Internet Explorer
+        try {
+            req = new ActiveXObject("Msxml2.XMLHTTP");
+        }
+        catch (e) {
+            try {
+                req = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            catch (e) {
+                alert("Your browser does not support AJAX!");
+                return false;
+            }
+        }
+    }
+    req.open("POST", url, true);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            // console.log("callback called!!"); 
+            // console.log("req in xml_http_post = ", req); 
+            //jsonData = callback(req);
+            var serverResponse = JSON.parse(req.responseText);
+            drawGraph(serverResponse); 
+            //console.log("jsonData data in req", jsonData); 
+        }
+    }
+    req.send(data);
+}
+
+function getJSON(req){
+
+  //console.log("in getJSON data is ", req); 
+
+  //console.log("in getJSON response is ", req.response);
+  //console.log("right before assigning json data in getJSON");
+  jsonData = req.response;
+  //return jsonData; 
+
+}
+
+function drawGraph(graph){ 
+
+
+  console.log("drawGraph called "); 
+
+
+  var lengthScale = d3.scale.linear()
+  .range([100,20])
+  .domain(d3.extent(graph.links, function (d) { return +d.occurances}));
 
   force.nodes(graph.nodes)
-	     .linkDistance(function (d) {return lengthScale(+d.occurances) })
+       .linkDistance(function (d) {return lengthScale(+d.occurances) })
        .links(graph.links);
 
     force.start();
@@ -74,6 +148,27 @@ d3.json("test1.json", function(error, graph) {
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
   });
-});
+
+}
+
+var helloWorld = function(){
+
+  alert("Hello world!");
+}
+
+var sortGraph = function(graph){
+  var nodes = graph.nodes; 
+  nodes.sort(function (a, b){
+    return a.frequency - b.frequency;
+  });
+
+  graph.nodes = nodes; 
+  return graph;
+
+}
+
+window.onload = loadData; 
+
+
 
 </script>
