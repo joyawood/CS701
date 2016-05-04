@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+  <meta charset="utf-8">
+  <title>Force directed layout example</title>
+  <style>
+
+  .node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+  }
+
+  .link {
+    stroke: #999;
+    stroke-opacity: .6;
+  }
+
+
+  .bar:hover {
+    fill: brown;
+  }
+
+  .axis {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  #barDiv{
+    float:right;
+  }
+  #networkDiv{
+    float:left;
+  }
+  #cloudDiv{
+    float:left;
+  }
+
+
+  </style>
+  <body>
+
+    <div class="ui-widget">
+       <input id="search">
+        <button type="button" onclick="searchNode()">Search</button>
+    </div>
+    <div id = "barDiv"></div>
+    <div id = "networkDiv"></div>
+    <div id = "cloudDiv"></div>
+
+    <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"> </script>
+  <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <script src="cloud.js"></script>
+  <script>
+  //set up cloud
+
+  var colorWords = d3.scale.linear()
+          .domain([0,1,2,3,4,5,6,10,15,20,100])
+          .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+
+  var sizeScale = d3.scale.linear()
+          .range([10,50])
+          .domain([1,20]);
+
+  //setup for barchart
+
+  var marginBar = {top: 10, right: 30, bottom: 40, left: 30},
+      widthBar = 500 - marginBar.left - marginBar.right,
+      heightBar = 700/2 - marginBar.top - marginBar.bottom;
+
+  var x = d3.scale.ordinal()
+      .rangeRoundBands([0, widthBar], .1);
+
+  var y = d3.scale.linear()
+      .range([heightBar, 0]);
+
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
+
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left");
+
+  var svgBar = d3.select("#barDiv").append("svg")
+      .attr("width", widthBar + marginBar.left + marginBar.right)
+      .attr("height", heightBar + marginBar.top + marginBar.bottom)
+    .append("g")
+      .attr("transform", "translate(" + marginBar.left + "," + marginBar.top + ")");
+
+//setup for network
+
+  var width = 900,
+      height = 700-marginBar.top - marginBar.bottom;
+
+  var color = d3.scale.category20();
+
+  var force = d3.layout.force()
+      .charge(-150)
+      .linkDistance(30)
+      .size([width, height]);
+
+  var svg = d3.select("#networkDiv").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+  d3.json("test1.json", function(error, graph) {
+    xAxis.tickFormat("");
+
+    var words = graph.nodes;
+    words.sort(comparator);
+    var data = words.slice(0,20);
+
+    if (error) throw error;
+
+     x.domain(data.map(function(d, i) { return i; }));//switch to text
+     y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+     svgBar.append("g")
+         .attr("class", "x axis")
+         .attr("transform", "translate(0," + heightBar + ")")
+         .call(xAxis);
+
+     svgBar.append("g")
+         .attr("class", "y axis")
+         .call(yAxis)
+       .append("text")
+         .attr("transform", "rotate(-90)")
+         .attr("y", 6)
+         .style("text-anchor", "end");
+
+     svgBar.selectAll(".bar")
+         .data(data)
+       .enter().append("rect")
+         .attr("class", "bar")
+         .attr("x", function(d, i) { return x(i); })
+         .attr("width", x.rangeBand())
+         .attr("y", function(d) { return y(d.frequency); })
+         .attr("height", function(d) { return heightBar - y(d.frequency); })
+         .attr("fill", function(d){return color(d.group)})
+
+         .on('click', function(d,i){searchNode2(d.text)})
+         .append("title")
+             .text(function(d) { return d.text; });
+
+//draw cloud
+d3.layout.cloud().size([350, 300])
+        .words(data)
+        .rotate(0)
+        .fontSize(function(d) { return sizeScale(d.frequency) })
+        .on("end", draw)
+        .start();
+
+function draw(words) {
+    d3.select("#cloudDiv").append("svg")
+            .attr("width", 500)
+            .attr("height", 350)
+            .attr("class", "wordcloud")
+            .append("g")
+            // without the transform, words words would get cutoff to the left and top, they would
+            // appear outside of the SVG area
+            .attr("transform", "translate(200,170)")
+            .selectAll("text")
+            .data(words)
+            .enter().append("text")
+            .style("font-size", function(d) { return sizeScale(d.frequency)+ "px"; })
+            .style("fill", function(d, i) { return colorWords(i); })
+            .on('click', function(d,i){searchNode2(d.text)})
+            .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .text(function(d) { return d.text; });
+}
+
+//draw nodes
+  	var lengthScale = d3.scale.linear()
+  	.range([100,20])
+  	.domain(d3.extent(graph.links, function (d) { return +d.occurances}));
+
+    force.nodes(graph.nodes)
+  	     .linkDistance(function (d) {return lengthScale(+d.occurances) })
+         .links(graph.links);
+
+      force.start();
+
+    var link = svg.selectAll(".link")
+        .data(graph.links)
+      .enter().append("line")
+        .attr("class", "link")
+        .style("stroke-width", function(d) { return Math.sqrt(+d.occurances); });
+
+var radius = 4;
+    var node = svg.selectAll(".nodes")
+        .data(graph.nodes)
+      .enter().append("circle")
+        .attr("class", "node")
+        .attr("r", function (d){ return radius + d.frequency})
+        .style("fill", function(d) { return color(d.group); })
+        .call(force.drag)
+        .on('dblclick', connectedNodes); //Added code;
+
+    node.append("title")
+        .text(function(d) { return d.text; });
+
+    force.on("tick", function() {
+      link.attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
+
+      node.attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x));})
+        .attr("cy", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y));  });
+
+
+
+    });
+    //Toggle stores whether the highlighting is on
+  var toggle = 0;
+  //Create an array logging what is connected to what
+  var linkedByIndex = {};
+  for (i = 0; i < graph.nodes.length; i++) {
+  linkedByIndex[i + "," + i] = 1;
+  };
+  graph.links.forEach(function (d) {
+  linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
+  //This function looks up whether a pair are neighbours
+  function neighboring(a, b) {
+  return linkedByIndex[a.index + "," + b.index];
+  }
+  function connectedNodes() {
+  if (toggle == 0) {
+    //Reduce the opacity of all but the neighbouring nodes
+    d = d3.select(this).node().__data__;
+    node.style("opacity", function (o) {
+        return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+    });
+    link.style("opacity", function (o) {
+        return d.index==o.source.index | d.index==o.target.index ? 1 : 0.1;
+    });
+    //Reduce the op
+    toggle = 1;
+  } else {
+    //Put them back to opacity=1
+    node.style("opacity", 1);
+    link.style("opacity", 1);
+    toggle = 0;
+  }
+  }
+
+  svg.append("defs").selectAll("marker")
+      .data(["suit", "licensing", "resolved"])
+    .enter().append("marker")
+      .attr("id", function(d) { return d; })
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 25)
+      .attr("refY", 0)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+    .append("path")
+      .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+      .style("stroke", "#4679BD")
+      .style("opacity", "0.6");
+
+  });
+  var optArray = [];
+  for (var i = 0; i < graph.nodes.length - 1; i++) {
+      optArray.push(graph.nodes[i].text);
+  }
+  optArray = optArray.sort();
+  $(function () {
+      $("#search").autocomplete({
+          source: optArray
+      });
+  });
+  function searchNode() {
+      //find the node
+      var selectedVal = document.getElementById('search').value;
+      var node = svg.selectAll(".node");
+      if (selectedVal == "none") {
+          node.style("stroke", "white").style("stroke-width", "1");
+      } else {
+          var selected = node.filter(function (d, i) {
+              return d.text != selectedVal;
+          });
+          selected.style("opacity", "0");
+          var link = svg.selectAll(".link")
+          link.style("opacity", "0");
+          d3.selectAll(".node, .link").transition()
+              .duration(5000)
+              .style("opacity", 1);
+      }
+  }
+  function searchNode2(selectedVal) {
+      //find the node
+      var node = svg.selectAll(".node");
+      if (selectedVal == "none") {
+          node.style("stroke", "white").style("stroke-width", "1");
+      } else {
+          var selected = node.filter(function (d, i) {
+              return d.text != selectedVal;
+          });
+          selected.style("opacity", "0");
+          var link = svg.selectAll(".link")
+          link.style("opacity", "0");
+          d3.selectAll(".node, .link").transition()
+              .duration(10000)
+              .style("opacity", 1);
+      }
+  }
+  function comparator(word1, word2){
+    return word2.frequency-word1.frequency;
+  }
+
+  </script>
+</body>
+</html>
