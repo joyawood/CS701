@@ -10,6 +10,8 @@ Comments: not optimized for efficiency, rough test
 
 import string
 import json
+from textblob import TextBlob
+
 
 def main(filename):
     """takes a csv returns json prepped for graph layout"""
@@ -19,20 +21,29 @@ def main(filename):
     
     nodes = createNodes(wordList)[0]
 
-    print nodes
+    #print nodes
 
     links = createLinks(nodes, wordList)
+    #json_prep = {"nodes": nodes, "links":links}
     json_prep = {"nodes": nodes, "links":links}
 
     # Open a file for writing
     out_file = open("test1.json","w")
     
+
+    #json.dump(json_prep,out_file, indent=4)
+
+    data = json.dumps(json_prep)
     # Save the dictionary into this file
     # (the 'indent=4' is optional, but makes it more readable)
-    json.dump(json_prep,out_file, indent=4)          
+
+
+    #data = [ { 'a':'A', 'b':(2, 4), 'c':3.0 } ]
+
+    return data   
 
 def createLinks(nodes, wordList):
-    linksValue = [] #will be list of links
+    linksValue = [] 
     
     wordIndex = 0
     secondWordIndex = 0
@@ -89,9 +100,15 @@ def createNodes(words):
                 if obj["text"] == word:
                     obj["frequency"] += 1
         else:
-            temp = {"text" : word, "group": 1, "frequency": 1}
+            groupTag = TextBlob(word).tags
+            tagString = str(groupTag[0][1])
+            cleanTag = clean(tagString)
+
+            temp = {"text" : word, "group":cleanTag, "frequency": 1}
             nodesValue.append(temp)
             unique.append(word)
+
+    #sortedNodes = sorted(nodesValue, key=lambda x: x.frequency, reverse=True)
             
     return nodesValue, unique
 
@@ -116,6 +133,6 @@ def clean(word):
     word = word.lower()
     return word
 
-main("honor_code.txt")
+#main("honor_code.txt")
 
             
