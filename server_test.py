@@ -2,8 +2,9 @@ import threading
 import webbrowser
 import BaseHTTPServer
 import SimpleHTTPServer
+import csv_to_graph_json 
 
-FILE = 'frontend.html'
+FILE = 'force_graph.html'
 PORT = 8080
 
 
@@ -16,8 +17,13 @@ class TestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         data_string = self.rfile.read(length)
         try:
             result = int(data_string) ** 2
+
+            print "do_POST was called! "
+            result = csv_to_graph_json.main("honor_code.txt"); 
         except:
             result = 'error'
+
+        #result = 100
         self.wfile.write(result)
 
 
@@ -37,3 +43,4 @@ def start_server():
 if __name__ == "__main__":
     open_browser()
     start_server()
+
