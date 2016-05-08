@@ -1,5 +1,4 @@
-# CS 701 Final Project: 
-### Visualizing Textual Data
+#Visualizing Textual Data
 
 A tool allowing interactive exploration of text files. Focuses on showing connections between themes and words, as well as stats on word and part of speech frequency. Allows upload of txt files, then presents an interface displaying a network graph, wordcloud, and barchart of most common words. 
 
