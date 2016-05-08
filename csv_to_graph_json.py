@@ -11,6 +11,9 @@ Comments: not optimized for efficiency, rough test
 
 import string
 import json
+from textblob import TextBlob
+import sys
+
 
 def main(filename):
     """takes a csv returns json prepped for graph layout"""
@@ -89,7 +92,12 @@ def createNodes(words):
                 if obj["text"] == word:
                     obj["frequency"] += 1
         else:
-            temp = {"text" : word, "group": 1, "frequency": 1}
+            posTag = TextBlob(word).tags
+            tagString = str(posTag[0][1])
+            cleanTag = clean(tagString)
+
+            temp = {"text" : word, "group":cleanTag, "frequency": 1}
+
             nodesValue.append(temp)
             unique.append(word)
 
@@ -115,5 +123,7 @@ def clean(word):
     word = word.strip(string.punctuation + string.whitespace)
     word = word.lower()
     return word
+    
+print (sys.argv[1])
+main(sys.argv[1])
 
-main("honor_code.txt")
