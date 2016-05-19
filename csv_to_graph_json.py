@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Apr 30 11:33:52 2016
-
 @author: Joy
-
 Comments: not optimized for efficiency, rough test
           the "group" attribute of nodes will be used to color, for now preset to 1
           includes frequency
@@ -124,6 +122,6 @@ def clean(word):
     word = word.lower()
     return word
     
-print (sys.argv[1])
-main(sys.argv[1])
-
+if(len(sys.argv) > 1):
+    print (sys.argv[1])
+    main(sys.argv[1])
