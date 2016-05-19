@@ -18,9 +18,13 @@ python -m SimpleHTTPServer 8000
 ```
 http://localhost:8000/force_graph_combo_cloud.html
 ```
-
+* Choose file to upload in order to visualize it
 Double click to see immediate node connections, hover for rudamentary tooltip, click on barchart or wordcloud to see corresponding node in network visualization. 
 
 Known issues:
 
 * Don't search/click until previous search/click has finished fading in. Bad things happen. 
+
+* Mulitple visualizations get created everytime instead of replacing the old one 
+
+*Some errors in the console - graph not defined  
