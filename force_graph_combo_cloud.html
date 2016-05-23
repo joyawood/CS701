@@ -120,13 +120,18 @@
 
           d3.json("test1.json", function(error, graph) {
 
-            //s
-            if(uploadedJson === 0){
+            // //s
+            // if(uploadedJson === 0){
 
-            }
-            else{
-              graph = uploadedJson; 
-            }
+
+            // }
+            // else{
+            //   graph = uploadedJson; 
+            // }
+            graph;
+
+            debugger;
+
             console.log("graph is ", graph);
 
             xAxis.tickFormat("");
@@ -344,7 +349,7 @@
 
   }
 
-  //drawVis();
+  drawVis();
 
 
     //////////////////////////////////////////////////
@@ -392,7 +397,6 @@
       console.log("loadJson got called!");
       d3.json("upload.json", function(result){
         globalJson = result; 
-        debugger;
         console.log(result);
       }); 
     }
